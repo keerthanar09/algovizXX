@@ -1,0 +1,13 @@
+from . import views
+from .views import *
+from django.urls import path
+
+urlpatterns = [
+    path('', views.index, name = 'index'),
+    path("api/get_sorting_data/", get_sorting_data, name="get_sorting_data"),
+    path("api/get_graph_data/", get_graph_data, name = "get_graph_data"),
+    path("api/search_algorithms/", search_algorithms, name="search_algorithms"),
+    path("api/get_search_data/", get_search_data, name="get_search_data"),
+    path('visualize/', views.sort_visualizer_view, name='sort_visualizer'),
+    path('api/sort/bubble/', views.bubble_sort_api, name='bubble_sort_api'),
+]
