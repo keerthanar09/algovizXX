@@ -123,19 +123,25 @@ def get_search_data(request, format=None):
         )
     
 
-from django.http import JsonResponse
-from django.shortcuts import render
-from .sorting.bubblesort import bubble_sort_steps
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-@csrf_exempt
-def sort_visualizer_view(request):
-    return render(request, 'sort_visualizer.html')
+@api_view(['POST'])
+def bubble_sort(request):
+    array = request.data.get("array", [])
+    steps = []
 
-@csrf_exempt
-def bubble_sort_api(request):
-    if request.method == 'POST':
-        import json
-        data = json.loads(request.body)
-        arr = data.get('array', [])
-        steps = bubble_sort_steps(arr)
-        return JsonResponse({"steps": steps})
+    arr = array[:]
+    n = len(arr)
+    for i in range(n):
+        for j in range(n - i - 1):
+            step = {
+                "array": arr[:],
+                "highlight": [j, j + 1],
+            }
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                step["swapped"] = [j, j + 1]
+            steps.append(step)
+    steps.append({"array": arr[:], "sorted": True})
+    return Response({"steps": steps})

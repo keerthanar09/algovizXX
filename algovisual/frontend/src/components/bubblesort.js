@@ -1,70 +1,56 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './bubblesort.css'; // <-- Import the CSS file
+import React, { useState, useEffect } from 'react';
 
-const BubbleSortVisualizer = () => {
-  const [array] = useState([5, 3, 8, 4, 2]);
+const BubbleSortVisualizor = () => {
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const intervalRef = useRef(null);
 
   const fetchSteps = async () => {
-    setSteps([]);
-    setCurrentStep(0);
-
     const response = await fetch('http://localhost:8000/algorithms/api/sort/bubble/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ array }),
+      body: JSON.stringify({ array: [5, 3, 8, 4, 2] }),
     });
-
     const data = await response.json();
     setSteps(data.steps);
+    setCurrentStep(0);
   };
 
   useEffect(() => {
-    if (steps.length > 0 && currentStep < steps.length) {
-      intervalRef.current = setTimeout(() => {
-        setCurrentStep((prev) => prev + 1);
-      }, 500);
+    if (steps.length > 0 && currentStep < steps.length - 1) {
+      const timer = setTimeout(() => setCurrentStep((s) => s + 1), 500);
+      return () => clearTimeout(timer);
     }
-
-    return () => clearTimeout(intervalRef.current);
   }, [steps, currentStep]);
 
-  const getColorClass = (i) => {
-    const step = steps[currentStep];
-    if (!step) return 'bar blue';
-    if (step.sorted) return 'bar green';
-    if (step.swapped && step.swapped.includes(i)) return 'bar red';
-    if (step.highlight && step.highlight.includes(i)) return 'bar yellow';
-    return 'bar blue';
-  };
-
-  const currentArray = steps.length ? steps[Math.min(currentStep, steps.length - 1)]?.array : array;
+  const current = steps[currentStep] || { array: [] };
 
   return (
-    <div className="visualizer-container">
-      <h1 className="title">Bubble Sort Visualizer</h1>
+    <div>
+      <svg width="500" height="300">
+        {current.array.map((val, i) => {
+          const x = i * 40;
+          const y = 300 - val * 20;
+          const color = current.swapped?.includes(i)
+            ? 'red'
+            : current.highlight?.includes(i)
+            ? 'orange'
+            : 'blue';
 
-      <div className="bar-container">
-        {currentArray && currentArray.length ? (
-          currentArray.map((val, i) => (
-            <div
+          return (
+            <rect
               key={i}
-              className={getColorClass(i)}
-              style={{ height: `${val * 20 + 50}px` }}
-            ></div>
-          ))
-        ) : (
-          <p className="error-text">No array to display</p>
-        )}
-      </div>
-
-      <button className="sort-button" onClick={fetchSteps}>
-        Start Sorting
-      </button>
+              x={x}
+              y={y}
+              width={30}
+              height={val * 20}
+              fill={color}
+            />
+          );
+        })}
+      </svg>
+      <button onClick={fetchSteps}>Start Sorting</button>
     </div>
   );
 };
 
-export default BubbleSortVisualizer;
+export default BubbleSortVisualizor;
