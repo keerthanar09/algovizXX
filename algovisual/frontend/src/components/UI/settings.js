@@ -6,13 +6,13 @@ import "./styles/styles.css"
 const Settings = ({ numElements, setNumElements, togglePlayPause, isPlaying, fetchData }) => {
     const handleNumElementsChange = (e) => {
       const value = parseInt(e.target.value, 10);
-      if (value > 0 && value <= 100) {
+      if (value > 2 && value <= 50) {
         setNumElements(value);
         fetchData(); // Fetch new data whenever the array size is updated
       }
     };
     return (
-      <div class="settings">
+      <div>
         <h3>
           <svg
             xmlns="http://www.w3.org/2000/svg"

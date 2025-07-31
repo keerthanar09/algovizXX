@@ -8,5 +8,5 @@ urlpatterns = [
     path("api/get_graph_data/", get_graph_data, name = "get_graph_data"),
     path("api/search_algorithms/", search_algorithms, name="search_algorithms"),
     path("api/get_search_data/", get_search_data, name="get_search_data"),
-     path('api/sort/bubble/', bubble_sort),
+    path('api/sort/bubble/', bubble_sort),
 ]

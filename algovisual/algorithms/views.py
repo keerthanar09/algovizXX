@@ -30,7 +30,7 @@ def get_sorting_data(request, format=None):
             )
 
         
-        data = [random.randint(10, 300) for _ in range(num_elements)]
+        data = [random.randint(1, 10) for _ in range(num_elements)]
         return Response(data, status=status.HTTP_200_OK)
 
     except ValueError:

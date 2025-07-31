@@ -3,11 +3,6 @@ import "animate.css";
 import "animate.css/source/animate.css";
 import SearchBar from "./searchbar";
 
-{
-  /*Not gonna change the name of the function for convenience as i'd have to change it everywhere
-  but this function serves as a HEADER thats present in every page!*/
-}
-
 function NavBar() {
   return (
     <div id="header">

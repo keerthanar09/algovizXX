@@ -3,12 +3,13 @@ import React from "react";
 const NumberInput = ({ numElements, setNumElements }) => {
   const handleChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 2 && value <= 100) {
+    if (true) {
       setNumElements(value);
-    } else {
-      alert("Please enter a number between 2 and 100.");
-    }
+    } // else {
+    //   alert("Please enter a number between 2 and 100.");
+    // }
   };
+  
 
   return (
     <div class="form-floating mb-3">
@@ -18,8 +19,8 @@ const NumberInput = ({ numElements, setNumElements }) => {
         id="floatingInput"
         value={numElements}
         onChange={handleChange}
-        min="2"
-        max="50"
+        min={2}
+        max={50}
         placeholder="10"
       ></input>
       <label for="floatingInput">Enter Number of Elements to sort: </label>

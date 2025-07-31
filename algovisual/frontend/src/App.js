@@ -1,5 +1,4 @@
-
-import React from 'react';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -24,25 +23,25 @@ import SearchListPage from './pages/serpage';
 function App() {
   return (
     <div>
-    <Router>
-      <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/Sortinglist" element={<AlgorithmList/>} />
-          <Route path="/pflist" element={<PathFindingListPage/>} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Sortinglist" element={<AlgorithmList />} />
+          <Route path="/pflist" element={<PathFindingListPage />} />
           <Route path="/bubble" element={<BubbleVizPage />} />
           <Route path="/merge" element={<MergeVizPage />} />
           <Route path="/quick" element={<QuickVizPage />} />
           <Route path="/select" element={<SelVizPage />} />
           <Route path="/test" element={<Carousal2 />} />
-          <Route path="/bellman" element={<BellmanVizPage/>}/>
-          <Route path="/dj" element={<DijViz/>}/>
-          <Route path="/bfs" element={<BFSVisPage/>}/>
-          <Route path="/dfs" element={<DFSVisPage/>}/>
-          <Route path="/SearchList" element={<SearchListPage/>}/>
-          <Route path="/lin" element={<LinearSearchPage/>}/>
-          <Route path="/bin" element={<BinarySearchPage/>}/>
-      </Routes>
-    </Router>
+          <Route path="/bellman" element={<BellmanVizPage />} />
+          <Route path="/dj" element={<DijViz />} />
+          <Route path="/bfs" element={<BFSVisPage />} />
+          <Route path="/dfs" element={<DFSVisPage />} />
+          <Route path="/SearchList" element={<SearchListPage />} />
+          <Route path="/lin" element={<LinearSearchPage />} />
+          <Route path="/bin" element={<BinarySearchPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
