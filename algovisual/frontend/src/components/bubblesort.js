@@ -6,12 +6,14 @@ const BubbleSortVisualizor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [numElements, setNumElements] = useState(10);
   const [isPlaying, setIsPlaying] = useState(false);
+  
 
   const fetchSteps = useCallback(async () => {
-    const arrResponse = await fetch(`http://127.0.0.1:8000/algorithms/api/get_sorting_data/?num_elements=${numElements}`);
+    const BASE_URL = process.env.REACT_APP_API_URL;
+    const arrResponse = await fetch(`${BASE_URL}/algorithms/api/get_sorting_data/?num_elements=${numElements}`);
     const arrData = await arrResponse.json();
 
-    const response = await fetch('http://localhost:8000/algorithms/api/sort/bubble/', {
+    const response = await fetch(`${BASE_URL}/algorithms/api/sort/bubble/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ array: arrData }),
