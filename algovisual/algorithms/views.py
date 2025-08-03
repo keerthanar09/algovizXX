@@ -126,6 +126,8 @@ def get_search_data(request, format=None):
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+# Bubble sort
+
 @api_view(['POST'])
 def bubble_sort(request):
     array = request.data.get("array", [])
@@ -214,3 +216,33 @@ def merge_sort(request):
     merge_sort_recursive(arr, 0, len(arr) - 1)
     steps.append({"array": arr[:], "highlight": [], "swapped": [], "sorted": True})
     return Response({"steps": steps})
+
+# Selection Sort
+
+@api_view(['POST'])
+def selection_sort(request):
+    array = request.data.get("array", [])
+    steps = []
+
+    a = array[:]
+    n = len(a)
+    for i in range(n):
+        min = i
+        for j in range(i+1, n):
+            steps.append({
+                "array":a[:],
+                "highlight": [min, j],
+            })
+            if a[min] > a[j]:
+                min = j
+        
+        a[i], a[min] = a[min], a[i]
+        steps.append({
+                "array": a[:],
+                "highlight": [i, min],
+                "swapped": [i, min]
+            })
+ 
+    
+    steps.append({"array":a[:], "sorted":True})
+    return Response({"steps":steps})

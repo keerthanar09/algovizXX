@@ -8,7 +8,7 @@ const BubbleSortVisualizor = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   
 
-  const fetchSteps = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     const BASE_URL = process.env.REACT_APP_API_URL;
     const arrResponse = await fetch(`${BASE_URL}/algorithms/api/get_sorting_data/?num_elements=${numElements}`);
     const arrData = await arrResponse.json();
@@ -29,8 +29,8 @@ const BubbleSortVisualizor = () => {
   };
 
   useEffect(() => {
-    fetchSteps();
-  }, [fetchSteps]);
+    fetchData();
+  }, [fetchData]);
 
   useEffect(() => {
     if (isPlaying && steps.length > 0 && currentStep < steps.length - 1) {
