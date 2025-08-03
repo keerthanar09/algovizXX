@@ -12,8 +12,9 @@ const SearchBar = () => {
 
     if (searchQuery.length > 0) {
       try {
+        const BASE_URL = process.env.REACT_APP_API_URL;
         const response = await fetch(
-          `http://127.0.0.1:8000/api/search_algorithms/?query=${searchQuery}`
+          `${BASE_URL}/algorithms/api/search_algorithms/?query=${searchQuery}`
         );
         const data = await response.json();
         setResults(data);
@@ -31,7 +32,7 @@ const SearchBar = () => {
 
   return (
     <div style={{ position: "relative" }}>
-      <form class="d-flex" role="search">
+      <form class="d-flex " role="search">
         <input
           class="form-control me-2"
           type="search"

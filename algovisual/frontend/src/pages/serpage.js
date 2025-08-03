@@ -6,7 +6,7 @@ function SearchListPage(){
     return(
         <div>
             <NavBar />
-            <h1>Searching Algorithms</h1>
+            <h1 className="p-3 text-center">Searching Algorithms</h1>
             <SearchAlgorithmList/>
         </div>
     )

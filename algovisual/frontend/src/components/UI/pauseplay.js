@@ -1,9 +1,10 @@
 import React from "react";
+import "./styles/styles.css";
 
 const PlayPauseButton = ({ isPlaying, togglePlayPause }) => {
   return (
     <div>
-      <button type="button" class="btn btn-outline-primary" onClick={togglePlayPause}>
+      <button type="button" class="btn btn-outline-dark" onClick={togglePlayPause}>
         {isPlaying ? ( 
           <svg
             xmlns="http://www.w3.org/2000/svg"

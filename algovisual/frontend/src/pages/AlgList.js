@@ -3,9 +3,9 @@ import NavBar from "../components/UI/navbar";
 
 function AlgorithmList(){
     return(
-        <div>
+        <div> 
             <NavBar />
-            <h1>Sorting Algorithms</h1>
+            <h1 className="text-center p-3">Sorting Algorithms</h1>
             <ClickList />
         </div>
     )

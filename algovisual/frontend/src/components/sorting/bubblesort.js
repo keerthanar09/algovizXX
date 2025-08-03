@@ -9,7 +9,6 @@ const BubbleSortVisualizor = () => {
   const [numElements, setNumElements] = useState(10);
   const [isPlaying, setIsPlaying] = useState(false);
   
-
   const fetchData = useCallback(async () => {
     const BASE_URL = process.env.REACT_APP_API_URL;
     const arrResponse = await fetch(`${BASE_URL}/algorithms/api/get_sorting_data/?num_elements=${numElements}`);

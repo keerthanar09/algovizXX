@@ -22,7 +22,7 @@ import SearchListPage from './pages/serpage';
 
 function App() {
   return (
-    <div>
+    <div className='app'>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

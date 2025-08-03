@@ -1,24 +1,20 @@
-/* App.css */
-
 body {
   margin: 0;
   font-family: sans-serif;
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Light mode (default) */
 .app {
-  background-color: #ffffff;
-  color: #000000;
+  background: linear-gradient(90deg, #0d0c0e 0%, #0b295c 100%) !important;
+  color: #ffffff;
+  min-height: 100vh;
 }
 
-/* Dark mode */
 .app.dark {
   background-color: #121212;
   color: #ffffff;
 }
 
-/* Optional: Buttons, Nav, etc. */
 button {
   padding: 8px 16px;
   margin-top: 20px;
