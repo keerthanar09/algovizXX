@@ -1,5 +1,4 @@
 import React from "react";
-import GenerateArrayButton from "./genarr";
 import NumberInput from "./inputbox";
 import PlayPauseButton from "./pauseplay";
 import "./styles/styles.css"
@@ -8,7 +7,7 @@ const Settings = ({ numElements, setNumElements, togglePlayPause, isPlaying, fet
       const value = parseInt(e.target.value, 10);
       if (value > 2 && value <= 50) {
         setNumElements(value);
-        fetchData(); // Fetch new data whenever the array size is updated
+        fetchData(); 
       }
     };
     return (
@@ -28,7 +27,6 @@ const Settings = ({ numElements, setNumElements, togglePlayPause, isPlaying, fet
           &nbsp; Settings
         </h3>
         <NumberInput value={numElements} setNumElements={setNumElements} onChange={handleNumElementsChange}/>
-        <GenerateArrayButton fetchData={fetchData} />
         <PlayPauseButton isPlaying={isPlaying} togglePlayPause={togglePlayPause} />
       </div>
     );

@@ -5,9 +5,7 @@ const NumberInput = ({ numElements, setNumElements }) => {
     const value = parseInt(e.target.value, 10);
     if (true) {
       setNumElements(value);
-    } // else {
-    //   alert("Please enter a number between 2 and 100.");
-    // }
+    } 
   };
   
 

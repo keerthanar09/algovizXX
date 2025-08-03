@@ -9,4 +9,5 @@ urlpatterns = [
     path("api/search_algorithms/", search_algorithms, name="search_algorithms"),
     path("api/get_search_data/", get_search_data, name="get_search_data"),
     path('api/sort/bubble/', bubble_sort),
+    path('api/sort/merge/', merge_sort),
 ]

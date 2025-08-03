@@ -145,3 +145,72 @@ def bubble_sort(request):
             steps.append(step)
     steps.append({"array": arr[:], "sorted": True})
     return Response({"steps": steps})
+
+# Merge sort API
+
+@api_view(['POST'])
+def merge_sort(request):
+    array = request.data.get("array", [])
+    steps = []
+
+    def merge_sort_recursive(a, low, high):
+        if low < high:
+            mid = (low + high) // 2
+            merge_sort_recursive(a, low, mid)
+            merge_sort_recursive(a, mid + 1, high)
+            simple_merge(a, low, mid, high)
+
+    def simple_merge(a, low, mid, high):
+        i = low
+        j = mid+1
+        k = low
+        c = []
+        while i <= mid+1 and j<= high:
+            steps.append({"array":a[:],
+                          "highlight": [k],
+                          "swapped": []})
+            
+            if a[i] < a[j]:
+                steps.append({
+                        "array": a[:],
+                        "highlight": [k],
+                        "swapped": [k]
+                    })
+                c[k].append(a[i])
+                i+=1
+                k+=1
+            else:
+                steps.append({
+                        "array": a[:],
+                        "highlight": [k],
+                        "swapped": [k]
+                    })
+                c[k].append[a[j]]
+                j+=1
+                k+=1
+        while j <= high:
+            steps.append({
+                "array": a[:],
+                "highlight": [k],
+                "swapped": [k]
+            })
+            c[k].append(a[j])
+            j+=1
+            k+=1
+        while i <= high:
+            steps.append({
+                "array": a[:],
+                "highlight": [k],
+                "swapped": [k]
+            })
+            c[k].append(a[i])
+            i+=1
+            k+=1
+        
+        for i in range(len(c)):
+            a[i].append(c[i])
+
+    arr = array[:]
+    merge_sort_recursive(arr, 0, len(arr) - 1)
+    steps.append({"array": arr[:], "highlight": [], "swapped": [], "sorted": True})
+    return Response({"steps": steps})

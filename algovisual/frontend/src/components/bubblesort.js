@@ -74,7 +74,6 @@ const BubbleSortVisualizor = () => {
         setNumElements={setNumElements}
         togglePlayPause={togglePlayPause}
         isPlaying={isPlaying}
-        fetchData={fetchSteps}
       />
       </div>
     </div>
