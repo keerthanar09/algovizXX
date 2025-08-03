@@ -1,4 +1,4 @@
-import QuickSortVisualization from "../components/quick";
+import QuickSortVisualization from "../components/sorting/quick";
 import NavBar from "../components/UI/navbar";
 
 function QuickVizPage() {

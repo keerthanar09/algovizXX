@@ -1,4 +1,4 @@
-import SelectionSortVisualization from "../components/selection";
+import SelectionSortVisualization from "../components/sorting/selection";
 import NavBar from "../components/UI/navbar";
 
 function SelVizPage() {

@@ -1,4 +1,4 @@
-import BubbleSortVisualizor from "../components/bubblesort";
+import BubbleSortVisualizor from "../components/sorting/bubblesort";
 import NavBar from "../components/UI/navbar";
 
 function BubbleVizPage() {

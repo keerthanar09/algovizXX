@@ -11,5 +11,6 @@ urlpatterns = [
     path('api/sort/bubble/', bubble_sort),
     path('api/sort/merge/', merge_sort),
     path('api/sort/selection/', selection_sort),
+    path('api/sort/quick/', quick_sort),
 
 ]

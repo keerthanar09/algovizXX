@@ -1,8 +1,8 @@
 import React, {useEffect, useState, useCallback} from "react";
-import Settings from "./UI/settings";
-import "./UI/styles/styles.css"
+import Settings from "../UI/settings";
+import '../UI/styles/styles.css';
 
-const MergeSortVisualization = () => {
+const QuickSortVisualization = () => {
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [numElements, setNumElements] = useState(10);
@@ -13,10 +13,10 @@ const MergeSortVisualization = () => {
       const BASE_URL = process.env.REACT_APP_API_URL;
       const arrResponse = await fetch(`${BASE_URL}/algorithms/api/get_sorting_data/?num_elements=${numElements}`);
       const arrData = await arrResponse.json();
-      const response = await fetch(`${BASE_URL}/algorithms/api/sort/bubble/`, {
+      const response = await fetch(`${BASE_URL}/algorithms/api/sort/quick/`, {
         method:'POST',
         headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ array: arrData }),
+        body: JSON.stringify({ array: arrData }),
       });
       const data = await response.json();
       setSteps(data.steps);
@@ -78,7 +78,4 @@ return (
 );
 };
 
-
-
-export default MergeSortVisualization;
-  
+export default QuickSortVisualization;

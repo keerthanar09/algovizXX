@@ -121,10 +121,6 @@ def get_search_data(request, format=None):
             {"error": "Invalid 'num_elements' parameter. Must be an integer."},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 # Bubble sort
 
@@ -246,3 +242,54 @@ def selection_sort(request):
     
     steps.append({"array":a[:], "sorted":True})
     return Response({"steps":steps})
+
+# Quick sort
+
+@api_view(['POST'])
+def quick_sort(request):
+    array = request.data.get("array", [])
+    steps = []
+
+    def partition(a, low, high):
+        i = low + 1
+        j = high
+        p = a[low]
+        steps.append({
+            "array" : a[:],
+            "highlight": [low],
+            "swapped": [],
+        })
+        while True:
+            while i <= j and a[i] <= p:
+                i += 1
+            while i <= j and a[j] > p:
+                j -= 1
+            if i < j:
+                a[i], a[j] = a[j], a[i]
+                steps.append({
+                    "array": a[:],
+                    "highlight": [i, j],
+                    "swapped": [i, j]
+                })
+            else:
+                break
+        a[low], a[j] = a[j], a[low]
+        steps.append({
+            "array": a[:],
+            "highlight": [low, j],
+            "swapped": [low, j]
+        })
+        return j
+    
+    def quick(a, low, high):
+        if low<high:
+            k = partition(a, low, high)
+            quick(a, k+1, high)
+            quick(a, low, k-1)
+    
+    a = array[:]
+    quick(a, 0, len(a)-1)
+    steps.append({"array":a[:], "sorted":True})
+    return Response({"steps":steps})
+
+    

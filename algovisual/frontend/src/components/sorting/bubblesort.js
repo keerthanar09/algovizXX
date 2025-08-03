@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Settings from './UI/settings';
-import "./UI/styles/styles.css"
+import Settings from '../UI/settings';
+import '../UI/styles/styles.css';
+
+
 const BubbleSortVisualizor = () => {
   const [steps, setSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);

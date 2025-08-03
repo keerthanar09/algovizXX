@@ -1,4 +1,4 @@
-import MergeSortVisualization from "../components/merge";
+import MergeSortVisualization from "../components/sorting/merge";
 import NavBar from "../components/UI/navbar";
 
 function MergeVizPage() {
