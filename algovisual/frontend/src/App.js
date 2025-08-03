@@ -18,6 +18,7 @@ import DFSVisPage from './pages/dfspage';
 import LinearSearchPage from './pages/linpage';
 import BinarySearchPage from './pages/binpage';
 import SearchListPage from './pages/serpage';
+import About from './pages/About';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/Sortinglist" element={<AlgorithmList />} />
           <Route path="/pflist" element={<PathFindingListPage />} />
           <Route path="/bubble" element={<BubbleVizPage />} />

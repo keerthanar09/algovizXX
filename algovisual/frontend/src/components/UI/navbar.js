@@ -33,7 +33,7 @@ function NavBar() {
           Home
         </a>
 
-        <a className="navbar-brand d-flex align-items-center gap-2" href="/Sortinglist">
+        <a className="navbar-brand d-flex align-items-center gap-2" href="/about">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="21"
