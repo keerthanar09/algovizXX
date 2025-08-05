@@ -26,7 +26,7 @@ function About() {
       <ul>
         <li>React.js (Frontend Framework)</li>
         <li>Bootstrap (Styling)</li>
-        <li>Custom CSS Animations</li>
+        <li>CSS Animations</li>
       </ul>
 
       <h4 className="mt-4">📚 How It Works:</h4>

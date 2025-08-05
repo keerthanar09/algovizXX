@@ -17,6 +17,9 @@ function ClickList() {
       <a href="/select" class="list-group-item list-group-item-action text-bg-dark                ">
         Selection Sort
       </a>
+      <a href="/insertion" class="list-group-item list-group-item-action text-bg-dark                ">
+        Insertion Sort
+      </a>
     </div>
   );
 }

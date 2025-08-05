@@ -19,6 +19,7 @@ import LinearSearchPage from './pages/linpage';
 import BinarySearchPage from './pages/binpage';
 import SearchListPage from './pages/serpage';
 import About from './pages/About';
+import InsertionVizPage from './pages/InsertionViz';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path="/SearchList" element={<SearchListPage />} />
           <Route path="/lin" element={<LinearSearchPage />} />
           <Route path="/bin" element={<BinarySearchPage />} />
+          <Route path="/insertion" element = {<InsertionVizPage/>} />
         </Routes>
       </Router>
     </div>

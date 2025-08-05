@@ -292,4 +292,39 @@ def quick_sort(request):
     steps.append({"array":a[:], "sorted":True})
     return Response({"steps":steps})
 
-    
+
+# Insertion sort
+
+@api_view(['POST'])
+def insertion_sort(request):
+    array = request.data.get("array", [])
+    steps = []
+
+    a = array[:]
+    for i in range(1, len(a)):
+        j = i
+        steps.append({
+            "array":a[:],
+            "highlight":[j],
+        })
+        while j>=1:
+            steps.append({
+                "array":a[:],
+                "highlight":[j-1, j],
+            })
+            if a[j] < a[j-1]:
+                a[j], a[j-1] = a[j-1], a[j]
+                steps.append({
+                "array":a[:],
+                "highlight":[j-1, j],
+                "swapped":[j-1, j]
+                })
+                j = j-1
+            else:
+                break
+
+    steps.append({"array":a[:], "sorted":True})
+    return Response({"steps":steps})
+
+
+# Cycle sort
