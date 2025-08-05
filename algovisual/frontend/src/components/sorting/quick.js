@@ -41,8 +41,8 @@ const QuickSortVisualization = () => {
 
 
 return (
-  <div class="main-container">
-    <div className="vis">
+    <div className='main-container'>
+    <div className='vis'>
       <svg width="100%" height="100%">
         {current.array.map((val, i) => {
           const x = i * 40;
@@ -54,28 +54,35 @@ return (
             : 'blue';
 
           return (
-            <rect
-              key={i}
-              x={x}
-              y={y}
-              width={30}
-              height={val * 20}
-              fill={color}
-            />
+            <g key={i}>
+              <rect x={x} y={y} width={30} height={val * 20} fill={color} />
+              <text
+                x={x+15}
+                y={y-5}
+                font-family="Arial"
+                textAnchor="middle"
+                font-size="20"
+                stroke="#000000"
+                fill="#161b61ff"
+                stroke-linejoin="bevel"
+              > {val} </text>
+            </g>
           );
         })}
       </svg>
+      </div>
+
+    <div className='settings'>
+      <Settings
+        numElements={numElements}
+        setNumElements={setNumElements}
+        togglePlayPause={togglePlayPause}
+        isPlaying={isPlaying}
+      />
+      </div>
     </div>
-    <div className="settings">
-    <Settings
-      numElements={numElements}
-      setNumElements={setNumElements}
-      togglePlayPause={togglePlayPause}
-      isPlaying={isPlaying}
-    />
-    </div>
-  </div>
-);
+
+  );
 };
 
 export default QuickSortVisualization;

@@ -56,14 +56,19 @@ const InsertionSortVisualization = () => {
             : 'blue';
 
           return (
-            <rect
-              key={i}
-              x={x}
-              y={y}
-              width={30}
-              height={val * 20}
-              fill={color}
-            />
+            <g key={i}>
+              <rect x={x} y={y} width={30} height={val * 20} fill={color} />
+              <text
+                x={x+15}
+                y={y-5}
+                font-family="Arial"
+                textAnchor="middle"
+                font-size="20"
+                stroke="#000000"
+                fill="#161b61ff"
+                stroke-linejoin="bevel"
+              > {val} </text>
+            </g>
           );
         })}
       </svg>
