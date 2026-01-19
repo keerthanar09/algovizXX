@@ -56,6 +56,7 @@ algovizXX/
    cd algovizXX
    ```
 2) Set up the backend:
+   - Copy `requirements.txt` into the `algovisual` directory if not already present. It will be present in the main directory.
    ```bash
     cd algovisual
     python -m venv venv
