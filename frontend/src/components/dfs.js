@@ -36,17 +36,24 @@ const DFSVisualization = () => {
         Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) < 40;
 
       nodes.forEach((node) => {
-        let x, y, overlapping;
-        do {
-          x = Math.random() * (canvas.width - 100) + 50;
-          y = Math.random() * (canvas.height - 100) + 50;
-          overlapping = Object.values(positions).some(({ x: x2, y: y2 }) =>
-            isOverlapping(x, y, x2, y2)
-          );
-        } while (overlapping);
+  let pos = null;
 
-        positions[node] = { x, y };
-      });
+  do {
+    const x = Math.random() * (canvas.width - 100) + 50;
+    const y = Math.random() * (canvas.height - 100) + 50;
+
+    const overlapping = Object.values(positions).some(({ x: x2, y: y2 }) =>
+      isOverlapping(x, y, x2, y2)
+    );
+
+    if (!overlapping) {
+      pos = { x, y };
+    }
+  } while (!pos);
+
+  positions[node] = pos;
+});
+
 
       return positions;
     };

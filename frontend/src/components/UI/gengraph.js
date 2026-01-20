@@ -32,17 +32,24 @@ const GenerateGraph = ({ nodeCount, maxWeight, setNodes, setEdges, setGraph, set
       Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) < minDistance;
   
     nodes.forEach((node) => {
-      let x, y, overlapping;
-      do {
-        x = Math.random() * (canvasWidth - 2 * nodeRadius) + nodeRadius; // Keep nodes inside canvas
-        y = Math.random() * (canvasHeight - 2 * nodeRadius) + nodeRadius;
-        overlapping = Object.values(positions).some(({ x: x2, y: y2 }) =>
-          isOverlapping(x, y, x2, y2)
-        );
-      } while (overlapping);
-  
-      positions[node.id] = { x, y }; // Ensure you use the correct node identifier
-    });
+  let pos;
+
+  do {
+    const x = Math.random() * (canvasWidth - 2 * nodeRadius) + nodeRadius;
+    const y = Math.random() * (canvasHeight - 2 * nodeRadius) + nodeRadius;
+
+    const overlapping = Object.values(positions).some(({ x: x2, y: y2 }) =>
+      isOverlapping(x, y, x2, y2)
+    );
+
+    if (!overlapping) {
+      pos = { x, y };
+    }
+  } while (!pos);
+
+  positions[node.id] = pos;
+});
+
   
     return positions;
   };

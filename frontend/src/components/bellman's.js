@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import SettingsPF from "./UI/settingsPF";
 import "./UI/styles/align.css";
 
 const BellmanVisualization = () => {
   const canvasRef = useRef(null);
+
   const [sourceNode, setSourceNode] = useState(0);
   const [nodeCount, setNodeCount] = useState(6);
   const [maxWeight, setMaxWeight] = useState(10);
@@ -13,52 +14,10 @@ const BellmanVisualization = () => {
   const [positions, setPositions] = useState({});
   const [shortestPaths, setShortestPaths] = useState([]);
 
-  useEffect(() => {
-    if (nodes.length > 0 && edges.length > 0) {
-      drawGraph();
-    }
-  }, [nodes, edges, positions]);
-
-  const generateGraph = () => {
-    const newNodes = Array.from({ length: nodeCount }, (_, index) => ({
-      id: index,
-      dist: Infinity,
-    }));
-
-    const newEdges = [];
-    const newPositions = {};
+  const drawGraph = useCallback(() => {
     const canvas = canvasRef.current;
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 150;
+    if (!canvas) return;
 
-    newNodes.forEach((_, index) => {
-      const angle = (2 * Math.PI * index) / nodeCount;
-      newPositions[index] = {
-        x: centerX + radius * Math.cos(angle),
-        y: centerY + radius * Math.sin(angle),
-      };
-    });
-
-    for (let i = 0; i < nodeCount; i++) {
-      for (let j = i + 1; j < nodeCount; j++) {
-        if (Math.random() < 0.6) {
-          const weight = Math.floor(Math.random() * maxWeight) + 1;
-          newEdges.push({ from: i, to: j, weight });
-          newEdges.push({ from: j, to: i, weight });
-        }
-      }
-    }
-
-    setNodes(newNodes);
-    setEdges(newEdges);
-    setPositions(newPositions);
-    setShortestPaths([]);
-    setResult("");
-  };
-
-  const drawGraph = () => {
-    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -91,6 +50,89 @@ const BellmanVisualization = () => {
       ctx.fillStyle = "black";
       ctx.fillText(nodeId, x - 5, y + 5);
     });
+  }, [edges, positions]);
+
+  useEffect(() => {
+    if (nodes.length > 0 && edges.length > 0) {
+      drawGraph();
+    }
+  }, [nodes, edges, positions, drawGraph]);
+
+  const generateGraph = useCallback(() => {
+    const newNodes = Array.from({ length: nodeCount }, (_, index) => ({
+      id: index,
+      dist: Infinity,
+    }));
+
+    const newEdges = [];
+    const newPositions = {};
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 150;
+
+    newNodes.forEach((_, index) => {
+      const angle = (2 * Math.PI * index) / nodeCount;
+      newPositions[index] = {
+        x: centerX + radius * Math.cos(angle),
+        y: centerY + radius * Math.sin(angle),
+      };
+    });
+
+    for (let i = 0; i < nodeCount; i++) {
+      for (let j = i + 1; j < nodeCount; j++) {
+        if (Math.random() < 0.6) {
+          const weight = Math.floor(Math.random() * maxWeight) + 1;
+          newEdges.push({ from: i, to: j, weight });
+          newEdges.push({ from: j, to: i, weight });
+        }
+      }
+    }
+
+    setNodes(newNodes);
+    setEdges(newEdges);
+    setPositions(newPositions);
+    setShortestPaths([]);
+    
+    setResult("");
+  }, [nodeCount, maxWeight]);
+console.log(shortestPaths)
+  useEffect(() => {
+    generateGraph();
+  }, [generateGraph]);
+
+  const highlightEdge = async (from, to, color, ctx) => {
+    const fromNode = positions[from];
+    const toNode = positions[to];
+
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(fromNode.x, fromNode.y);
+    ctx.lineTo(toNode.x, toNode.y);
+    ctx.stroke();
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    drawGraph();
+  };
+
+  const displayShortestPaths = (startNode, graph) => {
+    const paths = graph.map((node, index) => ({
+      from: startNode,
+      to: index,
+      dist: node.dist,
+    }));
+
+    setShortestPaths(paths);
+
+    setResult(
+      paths
+        .map((path) => `Node ${path.from} → Node ${path.to}: ${path.dist}`)
+        .join("\n")
+    );
   };
 
   const runBellmanFord = async () => {
@@ -112,7 +154,10 @@ const BellmanVisualization = () => {
         const fromNode = newNodes[edge.from];
         const toNode = newNodes[edge.to];
 
-        if (fromNode.dist !== Infinity && fromNode.dist + edge.weight < toNode.dist) {
+        if (
+          fromNode.dist !== Infinity &&
+          fromNode.dist + edge.weight < toNode.dist
+        ) {
           toNode.dist = fromNode.dist + edge.weight;
           updated = true;
           await highlightEdge(edge.from, edge.to, "green", ctx);
@@ -135,37 +180,6 @@ const BellmanVisualization = () => {
     displayShortestPaths(sourceNode, newNodes);
   };
 
-  const highlightEdge = async (from, to, color, ctx) => {
-    const fromNode = positions[from];
-    const toNode = positions[to];
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = color;
-    ctx.beginPath();
-    ctx.moveTo(fromNode.x, fromNode.y);
-    ctx.lineTo(toNode.x, toNode.y);
-    ctx.stroke();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    drawGraph();
-  };
-
-  const displayShortestPaths = (startNode, graph) => {
-    const paths = graph.map((node, index) => ({
-      from: startNode,
-      to: index,
-      dist: node.dist,
-    }));
-    setShortestPaths(paths); // Ensure it's always an array
-    setResult(
-      paths
-        .map((path) => `Node ${path.from} → Node ${path.to}: ${path.dist}`)
-        .join("\n")
-    );
-  };
-
-  useEffect(() => {
-    generateGraph();
-  }, [nodeCount, maxWeight]);
-
   return (
     <div className="mc">
       <SettingsPF
@@ -177,12 +191,15 @@ const BellmanVisualization = () => {
         sourceNode={sourceNode}
         setSourceNode={setSourceNode}
       />
-      <canvas id="canv"
+
+      <canvas
+        id="canv"
         ref={canvasRef}
         width={400}
         height={400}
         style={{ border: "1px solid black" }}
-      ></canvas>
+      />
+
       <pre>{result}</pre>
     </div>
   );
