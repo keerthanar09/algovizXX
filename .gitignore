@@ -1,1 +1,7 @@
 venv
+/algovisual/requirements.txt
+/algovisual/algovisual/db.sqlite3
+/algovisual/algovisual/__pycache__
+/algovisual/algorithms/__pycache__
+/algovisual/algorithms/migrations
+/algovisual/__init__.py
