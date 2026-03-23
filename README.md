@@ -80,3 +80,15 @@ algovizXX/
 - Update Pathfinding and search algorithms using SVGs and Django
 - More algorithms visualizations
 - User authentication
+
+
+  Reusable SVG graph renderer for pathfinding visualizations.
+  Props:
+    nodes       - [{id, x, y}]
+    edges       - [{from, to, weight?}]
+    visited     - [id, ...]
+    current     - id | null
+    pathEdges   - [{from, to}]  highlighted path/tree edges
+    activeEdge  - {from, to} | null  currently relaxing edge
+    showWeights - bool
+ 

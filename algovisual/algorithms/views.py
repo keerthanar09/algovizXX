@@ -40,37 +40,50 @@ def get_sorting_data(request, format=None):
         )
 
 @api_view(['GET'])
-def get_graph_data(request, format = None):
-    try: 
+def get_graph_data(request, format=None):
+    try:
         max_weight = int(request.query_params.get('max_weight', 20))
-
         node_count = int(request.query_params.get('node_count', 6))
-        nodes = []
-        edges = []
-        graph = [[IndentationError('inf')] * node_count for _ in range(node_count)]
-        # center_x, center_y, radius = 300, 300, 150
-        if node_count < 3 or node_count > 15:
-            return Response(
-                {
-                    "error":"Node count must be within the range of 3 and 15"
-                },
-                status = status.HTTP_400_BAD_REQUEST,
-            )
-        nodes = [{'id': i, 'x': random.randint(50, 350), 'y': random.randint(50, 350)} for i in range(node_count)]
-        edges = []
-        graph = [[float('inf')] * node_count for _ in range(node_count)]
+        directed = request.query_params.get('directed', 'false').lower() == 'true'
 
+        if node_count < 3 or node_count > 15:
+            return Response({"error": "Node count must be within the range of 3 and 15"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Place nodes in a circle for clean SVG layout
+        cx, cy, r = 300, 220, 160
+        nodes = []
         for i in range(node_count):
-            graph[i][i] = 0
+            angle = (2 * math.pi * i) / node_count - math.pi / 2
+            nodes.append({'id': i, 'x': round(cx + r * math.cos(angle)), 'y': round(cy + r * math.sin(angle))})
+
+        edges = []
+        adj = [[float('inf')] * node_count for _ in range(node_count)]
+        for i in range(node_count):
+            adj[i][i] = 0
+
+        # Ensure connectivity via spanning tree first
+        shuffled = list(range(node_count))
+        random.shuffle(shuffled)
+        for k in range(1, node_count):
+            i, j = shuffled[k - 1], shuffled[k]
+            w = random.randint(1, max_weight)
+            edges.append({'from': i, 'to': j, 'weight': w})
+            adj[i][j] = w
+            if not directed:
+                adj[j][i] = w
+
+        # Add extra random edges
+        for i in range(node_count):
             for j in range(i + 1, node_count):
-                if random.random() > 0.5:  # Randomly decide whether to create an edge
-                    weight = random.randint(1, max_weight)
-                    edges.append({'from': i, 'to': j, 'weight': weight})
-                    graph[i][j] = graph[j][i] = weight
-        for i in range(len(graph)):
-            for j in range(len(graph[i])):
-                if graph[i][j] == float('inf'):
-                    graph[i][j] = 99999
+                if adj[i][j] == float('inf') and random.random() > 0.6:
+                    w = random.randint(1, max_weight)
+                    edges.append({'from': i, 'to': j, 'weight': w})
+                    adj[i][j] = w
+                    if not directed:
+                        adj[j][i] = w
+
+        # Serialize inf as null for JSON
+        graph = [[None if v == float('inf') else v for v in row] for row in adj]
         return JsonResponse({'nodes': nodes, 'edges': edges, 'graph': graph})
     except ValueError:
         return JsonResponse({'error': 'Invalid parameters'}, status=400)
@@ -328,3 +341,229 @@ def insertion_sort(request):
 
 
 # Cycle sort
+
+#Sorting Algorithms
+# { nodes: [...], edges: [...], visited: [...], current: id, queue/stack: [...], path: [...], distances: {...} }
+
+@api_view(['POST'])
+def bfs(request):
+
+    nodes = request.data.get('nodes', [])
+    edges = request.data.get('edges', [])
+    source = int(request.data.get('source', 0))
+    steps = []
+
+    adj = {n['id']: [] for n in nodes}
+    for e in edges:
+        adj[e['from']].append(e['to'])
+        adj[e['to']].append(e['from'])
+
+    visited = []
+    queue = [source]
+    seen = {source}
+
+    while queue:
+        current = queue.pop(0)
+        visited.append(current)
+        steps.append({
+            'current': current,
+            'queue': queue[:],
+            'visited': visited[:],
+        })
+        for neighbor in sorted(adj[current]):
+            if neighbor not in seen:
+                seen.add(neighbor)
+                queue.append(neighbor)
+
+    steps.append({'current': None, 'queue': [], 'visited': visited[:], 'done': True})
+    return Response({'steps': steps})
+
+
+@api_view(['POST'])
+def dfs(request):
+    nodes = request.data.get('nodes', [])
+    edges = request.data.get('edges', [])
+    source = int(request.data.get('source', 0))
+    steps = []
+
+    adj = {n['id']: [] for n in nodes}
+    for e in edges:
+        adj[e['from']].append(e['to'])
+        adj[e['to']].append(e['from'])
+
+    visited = []
+    stack = [source]
+    seen = set()
+
+    while stack:
+        current = stack.pop()
+        if current in seen:
+            continue
+        seen.add(current)
+        visited.append(current)
+        steps.append({
+            'current': current,
+            'stack': stack[:],
+            'visited': visited[:],
+        })
+        for neighbor in sorted(adj[current], reverse=True):
+            if neighbor not in seen:
+                stack.append(neighbor)
+
+    steps.append({'current': None, 'stack': [], 'visited': visited[:], 'done': True})
+    return Response({'steps': steps})
+
+
+@api_view(['POST'])
+def dijkstra(request):
+    import heapq
+    nodes = request.data.get('nodes', [])
+    edges = request.data.get('edges', [])
+    source = int(request.data.get('source', 0))
+    steps = []
+
+    node_ids = [n['id'] for n in nodes]
+    adj = {nid: [] for nid in node_ids}
+    for e in edges:
+        adj[e['from']].append((e['to'], e['weight']))
+        adj[e['to']].append((e['from'], e['weight']))
+
+    INF = float('inf')
+    dist = {nid: INF for nid in node_ids}
+    dist[source] = 0
+    prev = {nid: None for nid in node_ids}
+    visited = []
+    pq = [(0, source)]
+
+    while pq:
+        d, current = heapq.heappop(pq)
+        if current in visited:
+            continue
+        visited.append(current)
+
+        # Build current path tree edges
+        path_edges = []
+        for nid in node_ids:
+            if prev[nid] is not None:
+                path_edges.append({'from': prev[nid], 'to': nid})
+
+        steps.append({
+            'current': current,
+            'visited': visited[:],
+            'distances': {str(k): (v if v != INF else None) for k, v in dist.items()},
+            'path_edges': path_edges,
+        })
+
+        for neighbor, weight in adj[current]:
+            if neighbor not in visited:
+                new_dist = dist[current] + weight
+                if new_dist < dist[neighbor]:
+                    dist[neighbor] = new_dist
+                    prev[neighbor] = current
+                    heapq.heappush(pq, (new_dist, neighbor))
+
+    path_edges = []
+    for nid in node_ids:
+        if prev[nid] is not None:
+            path_edges.append({'from': prev[nid], 'to': nid})
+
+    steps.append({
+        'current': None,
+        'visited': visited[:],
+        'distances': {str(k): (v if v != INF else None) for k, v in dist.items()},
+        'path_edges': path_edges,
+        'done': True,
+    })
+    return Response({'steps': steps})
+
+
+@api_view(['POST'])
+def bellman_ford(request):
+    nodes = request.data.get('nodes', [])
+    edges = request.data.get('edges', [])
+    source = int(request.data.get('source', 0))
+    steps = []
+
+    node_ids = [n['id'] for n in nodes]
+    INF = float('inf')
+    dist = {nid: INF for nid in node_ids}
+    dist[source] = 0
+    prev = {nid: None for nid in node_ids}
+
+    for iteration in range(len(node_ids) - 1):
+        updated = False
+        for e in edges:
+            u, v, w = e['from'], e['to'], e['weight']
+            # Check both directions (undirected)
+            for src, dst in [(u, v), (v, u)]:
+                if dist[src] != INF and dist[src] + w < dist[dst]:
+                    dist[dst] = dist[src] + w
+                    prev[dst] = src
+                    updated = True
+
+            path_edges = [{'from': prev[nid], 'to': nid} for nid in node_ids if prev[nid] is not None]
+            steps.append({
+                'iteration': iteration + 1,
+                'active_edge': e,
+                'distances': {str(k): (v if v != INF else None) for k, v in dist.items()},
+                'path_edges': path_edges,
+            })
+        if not updated:
+            break
+
+    path_edges = [{'from': prev[nid], 'to': nid} for nid in node_ids if prev[nid] is not None]
+    steps.append({
+        'iteration': 'done',
+        'active_edge': None,
+        'distances': {str(k): (v if v != INF else None) for k, v in dist.items()},
+        'path_edges': path_edges,
+        'done': True,
+    })
+    return Response({'steps': steps})
+
+
+#Searching Algorithms 
+# { array: [...], highlight: [...], found: index|null, low: int, high: int, mid: int, done: bool }
+
+@api_view(['POST'])
+def linear_search(request):
+    array = request.data.get('array', [])
+    key = int(request.data.get('key', 0))
+    steps = []
+
+    for i, val in enumerate(array):
+        step = {'array': array[:], 'highlight': [i], 'found': None}
+        if val == key:
+            step['found'] = i
+            step['done'] = True
+            steps.append(step)
+            return Response({'steps': steps})
+        steps.append(step)
+
+    steps.append({'array': array[:], 'highlight': [], 'found': -1, 'done': True})
+    return Response({'steps': steps})
+
+
+@api_view(['POST'])
+def binary_search(request):
+    array = request.data.get('array', [])
+    key = int(request.data.get('key', 0))
+    steps = []
+
+    low, high = 0, len(array) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        step = {'array': array[:], 'low': low, 'high': high, 'mid': mid, 'found': None}
+        if array[mid] == key:
+            step['found'] = mid
+            step['done'] = True
+            steps.append(step)
+            return Response({'steps': steps})
+        elif array[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+        steps.append(step)
+
+    steps.append({'array': array[:], 'low': low, 'high': high, 'mid': -1, 'found': -1, 'done': True})
+    return Response({'steps': steps})

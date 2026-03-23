@@ -1,14 +1,14 @@
-import LinearSearchVisualization from "../components/linsearch";
-import NavBar from "../components/UI/navbar";
+import LinearSearchViz from '../components/LinearSearchViz';
+import NavBar from '../components/UI/navbar';
 
 function LinearSearchPage() {
-    return(
-        <div>
-            <NavBar />
-            <h1><center>Linear Search Algorithm Visualization</center></h1>
-            <center><LinearSearchVisualization /></center>
-        </div>
-    )
+  return (
+    <div>
+      <NavBar />
+      <h1><center>Linear Search Visualization</center></h1>
+      <center><LinearSearchViz /></center>
+    </div>
+  );
 }
 
 export default LinearSearchPage;
