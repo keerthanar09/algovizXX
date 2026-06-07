@@ -22,7 +22,8 @@ def get_sorting_data(request, format=None):
     try:
         
         num_elements = int(request.query_params.get('num_elements', 10))
-        #Keeping the number of inputes within the range of 2 to 50 only as its reasonable.
+        #Keeping the number of inputes within the range of 2 to 50 since anything more than that 
+        #Doesnt look good in visualizations, takes more time than needed to understand an algorithm.
         if num_elements < 2 or num_elements > 50:
             return Response(
                 {"error": "num_elements must be between 2 and 50"},
@@ -174,55 +175,29 @@ def merge_sort(request):
     def simple_merge(a, low, mid, high):
         i = low
         j = mid+1
-        k = low
         c = []
-        while i <= mid+1 and j<= high:
-            steps.append({"array":a[:],
-                          "highlight": [k],
-                          "swapped": []})
-            
-            if a[i] < a[j]:
-                steps.append({
-                        "array": a[:],
-                        "highlight": [k],
-                        "swapped": [k]
-                    })
-                c[k].append(a[i])
+        while i <= mid and j<= high:
+            if a[i] <= a[j]:
+                c.append(a[i])
                 i+=1
-                k+=1
             else:
-                steps.append({
-                        "array": a[:],
-                        "highlight": [k],
-                        "swapped": [k]
-                    })
-                c[k].append[a[j]]
+                c.append(a[j])
                 j+=1
-                k+=1
         while j <= high:
-            steps.append({
-                "array": a[:],
-                "highlight": [k],
-                "swapped": [k]
-            })
-            c[k].append(a[j])
+            c.append(a[j])
             j+=1
-            k+=1
-        while i <= high:
-            steps.append({
-                "array": a[:],
-                "highlight": [k],
-                "swapped": [k]
-            })
-            c[k].append(a[i])
+        while i <= mid:
+            c.append(a[i])
             i+=1
-            k+=1
         
-        for i in range(len(c)):
-            a[i].append(c[i])
+        for idx in range(len(c)):
+            a[low + idx] = c[idx]
+
+            steps.append({"array": a[:], "highlight": [low + idx], "swapped": [low+idx]})
 
     arr = array[:]
-    merge_sort_recursive(arr, 0, len(arr) - 1)
+    if len(arr) > 1:
+        merge_sort_recursive(arr, 0, len(arr) - 1)
     steps.append({"array": arr[:], "highlight": [], "swapped": [], "sorted": True})
     return Response({"steps": steps})
 
