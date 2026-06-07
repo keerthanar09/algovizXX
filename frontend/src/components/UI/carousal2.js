@@ -2,22 +2,28 @@ import './styles/theme.css';
 
 const categories = [
   {
-    title: 'Sorting Algorithms',
-    description: 'Watch sorting algorithms rearrange data step by step in real time.',
+    title: 'Sorting',
+    description: 'Watch sorting algorithms rearrange data in real time :D',
     image: '/images/img2.jpg',
     href: '/Sortinglist',
   },
   {
-    title: 'Pathfinding Algorithms',
-    description: 'See graph traversal and shortest-path algorithms come to life.',
+    title: 'Graphs and Path-finding',
+    description: 'Visualize dijkstras, DFS, BFS and more!',
     image: '/images/img4.png',
     href: '/pflist',
   },
   {
-    title: 'Search Algorithms',
-    description: 'Step through linear and binary search on interactive arrays.',
+    title: 'Searching',
+    description: 'See how different algorithms search for data B)',
     image: '/images/img3.png',
     href: '/SearchList',
+  },
+  {
+    title: 'Trees',
+    description: 'Go deep with the trees!',
+    image: '/images/img5.png',
+    href: '/TreesList',
   },
 ];
 

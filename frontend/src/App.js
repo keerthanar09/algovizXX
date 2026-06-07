@@ -20,6 +20,7 @@ import BFSVisPage from './pages/bfsviz';
 import DFSVisPage from './pages/dfspage';
 import LinearSearchPage from './pages/linpage';
 import BinarySearchPage from './pages/binpage';
+import TreesListPage from './pages/TreesListPage';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/dfs" element={<DFSVisPage />} />
           <Route path="/lin" element={<LinearSearchPage />} />
           <Route path="/bin" element={<BinarySearchPage />} />
+          <Route path="/TreesList" element={<TreesListPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

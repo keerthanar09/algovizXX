@@ -22,10 +22,10 @@ const GenerateGraph = ({ nodeCount, maxWeight, setNodes, setEdges, setGraph, set
   
 
   const generateNonOverlappingPositions = (nodes) => {
-    const canvasWidth = 600; // Width of your canvas
-    const canvasHeight = 400; // Height of your canvas
-    const nodeRadius = 20; // Radius of each node
-    const minDistance = nodeRadius * 3; // Minimum distance between nodes
+    const canvasWidth = 600; 
+    const canvasHeight = 400; 
+    const nodeRadius = 20;
+    const minDistance = nodeRadius * 3; 
   
     const positions = {};
     const isOverlapping = (x1, y1, x2, y2) =>
