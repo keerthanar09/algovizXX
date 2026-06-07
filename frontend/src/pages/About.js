@@ -1,118 +1,97 @@
-import React from "react";
-import NavBar from "../components/UI/navbar";
+import NavBar from '../components/UI/navbar';
+import SmallScreenOverlay from '../components/UI/SmallScreenOverlay';
 
+
+const Section = ({ title, children }) => (
+  <div className="ava-about-section">
+    <h2>{title}</h2>
+    {children}
+  </div>
+);
 
 function About() {
   return (
-    <div className="container text-white">
+    
+    <div className="ava-page">
+      <SmallScreenOverlay />
       <NavBar />
-      <h1 className="text-center mb-4">About Algorithm Visualizer</h1>
+      <div className="ava-page-inner">
+        <h1 className="ava-page-title">About Algorithm Visualizer</h1>
+        <p className="ava-page-subtitle">An interactive tool for learning algorithms through step-by-step visualizations.</p>
 
-      <p className="lead">
-        The Algorithm Visualizer Application (AVA) is a web application that is
-        designed to help users understand how various algorithms work through
-        interactive visualizations. This application was initially a college
-        group project created using React and p5.js for the frontend and Django
-        as the backend, but I figured that I can make better visualizations
-        using SVG, and make them faster than I can create a p5 animation. So
-        this project is an attempt at creating beautiful and interactive
-        visualizations using React and SVG to make the process of learning new
-        algorithms a lot easier! You can still find the code for the older
-        version using p5 by clicking{" "}
-        <a href="https://github.com/keerthanar09/algorithm_visualizer">here.</a>
-        <br />
-        <br />
-        This website is only an MVP as of 05-08-2025. Improvements are
-        continuously being made to this application, so any <a href ="https://forms.gle/THpSf3cjAFJSGyxV6">feedback</a> on the
-        application (bugs, expected functionalities, new algorithms, etc) is
-        welcome!
-      </p>
+        <Section title="What is this?">
+          <p>
+            AVA (Algorithm Visualizer Application) started as a college group project using React and p5.js,
+            then was rebuilt with SVG for faster, cleaner animations. You can find the original p5 version{' '}
+            <a href="https://github.com/keerthanar09/algorithm_visualizer" style={{ color: 'var(--accent-500)' }}>here</a>.
+          </p>
+          <p style={{ marginTop: '0.5rem' }}>
+            This is an MVP. Improvements are ongoing —{' '}
+            <a href="https://forms.gle/brVCYJFAx9pCv8459" style={{ color: 'var(--accent-500)' }}>feedback</a> is always welcome.
+          </p>
+        </Section>
 
-      <h4 className="mt-5">✨ Key Features:</h4>
-      <ul>
-        <li>
-          Visualize sorting and pathfinding algorithms using SVG components
-        </li>
-        <li>Adjustable input sizes</li>
-        <li>Responsive design and animations</li>
-        <li>Pause/Play controls</li>
-      </ul>
+        <Section title="✨ Key Features">
+          <ul>
+            <li>SVG-based visualizations for sorting, pathfinding and search algorithms</li>
+            <li>Adjustable input sizes and parameters per algorithm</li>
+            <li>Pause / Play step controls</li>
+            <li>Light and dark mode</li>
+          </ul>
+        </Section>
 
-      <h4 className="mt-4">🛠️ Built With:</h4>
-      <ul>
-        <li>React.js (Frontend Framework)</li>
-        <li>SVG</li>
-        <li>Django (Backend Framework)</li>
-        <li>Bootstrap (Styling)</li>
-        <li>CSS Animations using animate.css</li>
-      </ul>
+        <Section title="🛠️ Built With">
+          <ul>
+            <li>React.js — Frontend framework</li>
+            <li>SVG — Visualization rendering</li>
+            <li>Django — Backend and algorithm API</li>
+            <li>Bootstrap + Custom CSS — Styling</li>
+          </ul>
+        </Section>
 
-      <h4 className="mt-4">📚 How It Works:</h4>
-      <p>
-        Select an algorithm from the list and watch it process data in
-        real-time. The settings panel allows users to control number of elements
-        used for input for the given algorithm.
-      </p>
+        <Section title="🪄 Available Algorithms">
+          <div className="ava-about-grid">
+            {[
+              { label: 'Sorting', items: ['Bubble Sort', 'Selection Sort', 'Insertion Sort', 'Merge Sort', 'Quick Sort'] },
+              { label: 'Pathfinding', items: ["Dijkstra's", 'Depth First Search', 'Breadth First Search', 'Bellman-Ford'] },
+              { label: 'Searching', items: ['Linear Search', 'Binary Search'] },
+            ].map(g => (
+              <div className="ava-about-group" key={g.label}>
+                <div className="ava-about-group-label">{g.label}</div>
+                <ul>{g.items.map(i => <li key={i}>{i}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </Section>
 
-      <h4 className="mt-4">✨ Future Features(what to expect)</h4>
-      <ul>
-        <li>
-          Speed of visualizations, autoplay/prev-next controls for all
-          algorithms.
-        </li>
-        <li>Custom user input for algorithms.</li>
-        <li>
-          Open compiler to see which step of the algorithm is being executed.
-        </li>
-        <li>
-          More detailed visualizations with variable labels and explanations.{" "}
-        </li>
-        <li>
-          Various new varieties of algorithms!
-        </li>
-        <li>
-          <b>Complexity analysis and comparison for algorithms with same functionalities</b>
-        </li>
-      </ul>
+        <Section title="✨ Coming Soon">
+          <ul>
+            <li>Speed controls and prev/next step navigation</li>
+            <li>Live code tracing as the visualization plays</li>
+            <li>Custom user input for algorithms</li>
+            <li>Complexity analysis and side-by-side comparisons</li>
+            <li>More algorithm varieties</li>
+          </ul>
+        </Section>
 
-      <h4 className="mt-4">🪄 Available Algorithms:</h4>
-      <ol>
-        <h5>Sorting Algorithms:</h5>
-        <li>Bubble sort</li>
-        <li>Selection sort</li>
-        <li>Insertion sort</li>
-        <li>Merge sort</li>
-        <li>Quick sort</li>
-      </ol>
-      <ol>
-        <h5>Path-Finding Algorithms:</h5>
-        <li>Dijkstra's Algorithm</li>
-        <li>Depth First Search</li>
-        <li>Breath First Search</li>
-        <li>Bellman-Ford's Algorithm</li>
-      </ol>
-      <ol>
-        <h5>Search Algorithms:</h5>
-        <li>Linear Search</li>
-        <li>Binary Search</li>
-      </ol>
+        <Section title="📁 Source Code">
+          <p>
+            <a href="https://github.com/keerthanar09/algovizXX" style={{ color: 'var(--accent-500)' }}
+              target="_blank" rel="noreferrer">
+              GitHub — source code and documentation
+            </a>
+          </p>
+        </Section>
 
-      <h4 className="mt-4">📁 Source Code:</h4>
-      <p>
-        Here's the ~
-        <a
-          href="https://github.com/keerthanar09/algovizXX"
-          className="text-info"
-          target="_blank"
-          rel="noreferrer"
-        >
-          source code and full documentation
-        </a>
-        ~ for the Algorithm Visualization Application!
-      </p>
-      <h4 className="mt-4">💌 Feedback: </h4>
-      Your feedback is highly valued! It'll help with updating and adding new features to the application 
-      so that you have an even seamless experience!<br/><a href ="https://forms.gle/THpSf3cjAFJSGyxV6">~ Feedback form ~</a> <br/><br/>
+        <Section title="💌 Feedback">
+          <p>
+            Your feedback helps improve the app.{' '}
+            <a href="https://forms.gle/THpSf3cjAFJSGyxV6" style={{ color: 'var(--accent-500)' }}>
+              Fill out the feedback form here.
+            </a>
+          </p>
+        </Section>
+      </div>
     </div>
   );
 }

@@ -1,33 +1,38 @@
-import React from 'react';
 import GraphSVG from './UI/GraphSVG';
 import SettingsPFNew from './UI/SettingsPFNew';
+import VizLayout from './UI/VizLayout';
 import useGraphViz from './useGraphViz';
-import './UI/styles/styles.css';
 
 const DFSViz = () => {
-  const { nodes, edges, nodeCount, setNodeCount, maxWeight, setMaxWeight, sourceNode, setSourceNode, fetchGraph, handleStart, isPlaying, togglePlayPause, step } = useGraphViz('pathfinding/dfs');
+  const { nodes, edges, nodeCount, setNodeCount, maxWeight, setMaxWeight,
+    sourceNode, setSourceNode, fetchGraph, handleStart,
+    isPlaying, togglePlayPause, step } = useGraphViz('pathfinding/dfs');
+
+  const statusBar = step.visited?.length > 0 ? (
+    <span>
+      <strong>Visited:</strong> {step.visited.join(' → ')}
+      {step.stack?.length > 0 && <span style={{ marginLeft: 16 }}><strong>Stack:</strong> [{step.stack.join(', ')}]</span>}
+    </span>
+  ) : null;
 
   return (
-    <div className="main-container">
-      <div className="vis" style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ flex: 1, minHeight: 0 }}>
-          <GraphSVG nodes={nodes} edges={edges} visited={step.visited || []} current={step.current ?? null} />
-        </div>
-        {step.visited?.length > 0 && (
-          <div style={{ padding: '8px 16px', fontSize: 15 }}>
-            <strong>Visited:</strong> {(step.visited || []).join(' → ')}
-            {step.stack?.length > 0 && <span style={{ marginLeft: 16 }}><strong>Stack:</strong> [{step.stack.join(', ')}]</span>}
-          </div>
-        )}
-      </div>
-      <SettingsPFNew
-        nodeCount={nodeCount} setNodeCount={setNodeCount}
-        maxWeight={maxWeight} setMaxWeight={setMaxWeight}
-        sourceNode={sourceNode} setSourceNode={setSourceNode}
-        fetchGraph={fetchGraph} handleStart={handleStart}
-        isPlaying={isPlaying} togglePlayPause={togglePlayPause}
-      />
-    </div>
+    <VizLayout
+      title="Depth First Search"
+      visualization={
+        <GraphSVG nodes={nodes} edges={edges}
+          visited={step.visited || []} current={step.current ?? null} />
+      }
+      statusBar={statusBar}
+      settingsPanel={
+        <SettingsPFNew
+          nodeCount={nodeCount} setNodeCount={setNodeCount}
+          maxWeight={maxWeight} setMaxWeight={setMaxWeight}
+          sourceNode={sourceNode} setSourceNode={setSourceNode}
+          fetchGraph={fetchGraph} handleStart={handleStart}
+          isPlaying={isPlaying} togglePlayPause={togglePlayPause}
+        />
+      }
+    />
   );
 };
 

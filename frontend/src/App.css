@@ -1,28 +1,5 @@
+/* Global resets — actual theming lives in theme.css */
 body {
   margin: 0;
-  font-family: sans-serif;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.app {
-  background: linear-gradient(90deg, #0d0c0e 0%, #0b295c 100%) !important;
-  color: #ffffff;
-  min-height: 100vh;
-}
-
-.app.dark {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-button {
-  padding: 8px 16px;
-  margin-top: 20px;
-  border: none;
-  cursor: pointer;
-}
-
-button.dark {
-  background-color: #333;
-  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
 }

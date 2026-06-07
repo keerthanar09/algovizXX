@@ -1,12 +1,13 @@
-import DFSViz from '../components/DFSViz';
 import NavBar from '../components/UI/navbar';
+import DFSViz from '../components/DFSViz';
+import SmallScreenOverlay from '../components/UI/SmallScreenOverlay';
 
 function DFSVisPage() {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--grad-page)' }}>
+      <SmallScreenOverlay />
       <NavBar />
-      <h1><center>Depth First Search Visualization</center></h1>
-      <center><DFSViz /></center>
+      <DFSViz />
     </div>
   );
 }

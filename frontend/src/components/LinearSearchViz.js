@@ -1,26 +1,27 @@
-import React from 'react';
 import SettingsSearchNew from './UI/SettingsSearchNew';
+import VizLayout from './UI/VizLayout';
 import useSearchViz from './useSearchViz';
-import './UI/styles/styles.css';
 
 const LinearSearchViz = () => {
-  const { numElements, setNumElements, searchKey, setSearchKey, fetchData, handleSearch, isPlaying, togglePlayPause, step } = useSearchViz('search/linear', false);
+  const { numElements, setNumElements, searchKey, setSearchKey,
+    fetchData, handleSearch, isPlaying, togglePlayPause, step } = useSearchViz('search/linear', false);
 
   const arr = step.array || [];
   const highlight = step.highlight || [];
   const found = step.found;
-  const barW = Math.max(20, Math.min(50, Math.floor(560 / arr.length) - 4));
+  const barW = Math.max(20, Math.min(50, Math.floor(560 / Math.max(arr.length, 1)) - 4));
   const maxVal = Math.max(...arr, 1);
 
-  const barColor = (i) => {
+  const barColor = i => {
     if (found != null && found >= 0 && i === found) return '#22c55e';
     if (highlight.includes(i)) return '#f59e0b';
-    return '#93c5fd';
+    return '#60a5fa';
   };
 
   return (
-    <div className="main-container">
-      <div className="vis">
+    <VizLayout
+      title="Linear Search"
+      visualization={
         <svg width="100%" height="100%" viewBox="0 0 600 340" preserveAspectRatio="xMidYMid meet">
           {arr.map((val, i) => {
             const x = 20 + i * (barW + 4);
@@ -34,19 +35,19 @@ const LinearSearchViz = () => {
             );
           })}
         </svg>
-        {found != null && (
-          <div style={{ padding: '8px 16px', fontSize: 13, fontWeight: 600 }}>
-            {found >= 0 ? `Found at index ${found}` : 'Key not found'}
-          </div>
-        )}
-      </div>
-      <SettingsSearchNew
-        numElements={numElements} setNumElements={setNumElements}
-        searchKey={searchKey} setSearchKey={setSearchKey}
-        fetchData={fetchData} handleSearch={handleSearch}
-        isPlaying={isPlaying} togglePlayPause={togglePlayPause}
-      />
-    </div>
+      }
+      statusBar={found != null
+        ? <span><strong>{found >= 0 ? `✓ Found at index ${found}` : '✗ Key not found'}</strong></span>
+        : null}
+      settingsPanel={
+        <SettingsSearchNew
+          numElements={numElements} setNumElements={setNumElements}
+          searchKey={searchKey} setSearchKey={setSearchKey}
+          fetchData={fetchData} handleSearch={handleSearch}
+          isPlaying={isPlaying} togglePlayPause={togglePlayPause}
+        />
+      }
+    />
   );
 };
 

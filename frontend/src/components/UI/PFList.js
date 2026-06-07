@@ -1,24 +1,20 @@
+import './styles/theme.css';
+
+const items = [
+  { name: "Bellman-Ford's Algorithm", href: '/bellman' },
+  { name: 'Depth First Search', href: '/dfs' },
+  { name: 'Breadth First Search', href: '/bfs' },
+  { name: "Dijkstra's Algorithm", href: '/dj' },
+];
+
 function PathFindList() {
-    return (
-      <div class="list-group">
-        <a
-          href="/bellman"
-          class="list-group-item text-center list-group-item-action text-bg-dark"
-          aria-current="true"
-        >
-          Bellman Ford's Algorithm
-        </a>
-        <a href="/dfs" class="list-group-item text-center list-group-item-action text-bg-dark">
-          Depth First Search Algorithm
-        </a>
-        <a href="/bfs" class="list-group-item text-center list-group-item-action text-bg-dark">
-          Breath First Search Algorithm
-        </a>
-        <a href="/dj" class="list-group-item text-center list-group-item-action text-bg-dark">
-          Dijkstra's Algorithm
-        </a>
-      </div>
-    );
-  }
-  export default PathFindList;
-  
+  return (
+    <div className="ava-alg-list">
+      {items.map(item => (
+        <a key={item.href} href={item.href} className="ava-alg-item">{item.name}</a>
+      ))}
+    </div>
+  );
+}
+
+export default PathFindList;

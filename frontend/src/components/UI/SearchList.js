@@ -1,18 +1,18 @@
+import './styles/theme.css';
+
+const items = [
+  { name: 'Linear Search', href: '/lin' },
+  { name: 'Binary Search', href: '/bin' },
+];
+
 function SearchAlgorithmList() {
-    return (
-      <div class="list-group">
-        <a
-          href="/lin"
-          class="list-group-item list-group-item-action text-bg-dark"
-          aria-current="true"
-        >
-          Linear Search
-        </a>
-        <a href="/bin" class="list-group-item list-group-item-action text-bg-dark">
-          Binary Search
-        </a>
-      </div>
-    );
-  }
-  export default SearchAlgorithmList;
-  
+  return (
+    <div className="ava-alg-list">
+      {items.map(item => (
+        <a key={item.href} href={item.href} className="ava-alg-item">{item.name}</a>
+      ))}
+    </div>
+  );
+}
+
+export default SearchAlgorithmList;

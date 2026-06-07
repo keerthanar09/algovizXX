@@ -1,26 +1,21 @@
+import './styles/theme.css';
+
+const items = [
+  { name: 'Bubble Sort', href: '/bubble' },
+  { name: 'Merge Sort', href: '/merge' },
+  { name: 'Quick Sort', href: '/quick' },
+  { name: 'Selection Sort', href: '/select' },
+  { name: 'Insertion Sort', href: '/insertion' },
+];
+
 function ClickList() {
   return (
-    <div class="list-group pt-3 pb-5">
-      <a
-        href="/bubble"
-        class="list-group-item text-center list-group-item-action text-bg-dark"
-        aria-current="true"
-      >
-        Bubble Sort
-      </a>
-      <a href="/merge" class="list-group-item text-center list-group-item-action text-bg-dark">
-        Merge Sort
-      </a>
-      <a href="/quick" class="list-group-item text-center list-group-item-action text-bg-dark">
-        Quick Sort
-      </a>
-      <a href="/select" class="list-group-item text-center list-group-item-action text-bg-dark                ">
-        Selection Sort
-      </a>
-      <a href="/insertion" class="list-group-item text-center list-group-item-action text-bg-dark                ">
-        Insertion Sort
-      </a>
+    <div className="ava-alg-list">
+      {items.map(item => (
+        <a key={item.href} href={item.href} className="ava-alg-item">{item.name}</a>
+      ))}
     </div>
   );
 }
+
 export default ClickList;

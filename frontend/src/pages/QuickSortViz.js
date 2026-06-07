@@ -1,14 +1,15 @@
-import QuickSortVisualization from "../components/sorting/quick";
-import NavBar from "../components/UI/navbar";
+import NavBar from '../components/UI/navbar';
+import QuickSortVisualization from '../components/sorting/quick';
+import SmallScreenOverlay from '../components/UI/SmallScreenOverlay';
 
 function QuickVizPage() {
-    return(
-        <div>
-            <NavBar />
-            <h1><center>Quick Sort Visualization</center></h1>
-            <center><QuickSortVisualization /></center>
-        </div>
-    )
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--grad-page)' }}>
+      <SmallScreenOverlay />
+      <NavBar />
+      <QuickSortVisualization />
+    </div>
+  );
 }
 
 export default QuickVizPage;

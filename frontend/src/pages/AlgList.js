@@ -1,14 +1,20 @@
-import ClickList from "../components/UI/ClickList";
-import NavBar from "../components/UI/navbar";
+import NavBar from '../components/UI/navbar';
+import ClickList from '../components/UI/ClickList';
+import SmallScreenOverlay from '../components/UI/SmallScreenOverlay';
 
-function AlgorithmList(){
-    return(
-        <div> 
-            <NavBar />
-            <h1 className="text-center p-3">Sorting Algorithms</h1>
-            <ClickList />
-        </div>
-    )
+
+function AlgorithmList() {
+  return (
+    <div className="ava-page">
+      <SmallScreenOverlay />
+      <NavBar />
+      <div className="ava-page-inner">
+        <h1 className="ava-page-title">Sorting Algorithms</h1>
+        <p className="ava-page-subtitle">Choose an algorithm to visualize</p>
+        <ClickList />
+      </div>
+    </div>
+  );
 }
 
 export default AlgorithmList;

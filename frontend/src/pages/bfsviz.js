@@ -1,12 +1,13 @@
-import BFSViz from '../components/BFSViz';
 import NavBar from '../components/UI/navbar';
+import BFSViz from '../components/BFSViz';
+import SmallScreenOverlay from '../components/UI/SmallScreenOverlay';
 
 function BFSVisPage() {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--grad-page)' }}>
+      <SmallScreenOverlay />
       <NavBar />
-      <h1><center>Breadth First Search Visualization</center></h1>
-      <center><BFSViz /></center>
+      <BFSViz />
     </div>
   );
 }
