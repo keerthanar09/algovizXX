@@ -98,7 +98,7 @@ algovizXX/
 
 The following diagram provides a general visualization of the React DOM tree that can serve as a reference to the overall frontend structure.
 
-![DOMRefDiagram](assets\Algovizxx.png)
+![DOMRefDiagram](assets/Algovizxx.png)
 
 The above diagram follows the following color coding for each element.
 
