@@ -2,6 +2,7 @@
 
 The Algorithm Visualizer Application's main goal is as the name suggests - to visualize algorithms. The purpose can be detailed as follows:
 > "To visualize an algorithm step-by-step to make complex algorithm's inner workings easy to understand."
+
 This application in it's current form is an MVP with the simplest form of visualizations, and the `main focus` of this project is not only to add more algorithms to this application, but also to make the visualizations clearer, easier to understand and accessible to everyone. 
 
 ## Tech Stack
@@ -101,10 +102,10 @@ The following diagram provides a general visualization of the React DOM tree tha
 
 The above diagram follows the following color coding for each element.
 
-🟣 - Root that mounts global providers such as theme, and the pages in this application.
-🔵 - Pages, all pages have Navbar and SmallScreenOverlay as common children.
-🟠 - Components.
-🟢 - Router.
+🟣 - Root that mounts global providers such as theme, and the pages in this application. <br>
+🔵 - Pages, all pages have Navbar and SmallScreenOverlay as common children. <br>
+🟠 - Components. <br>
+🟢 - Router. <br>
 🩷 - Hooks.
 
 ## Architecture
@@ -115,11 +116,14 @@ AVA follows a `Decoupled Single Page Application (SPA) architecture`. The React 
 
 https://algoviz-xx.vercel.app/
 
-## Features that need to be added
-- Speed control for visualizations
-- Tree algorithms
+## Upcoming Features
+- Speed control for visualizations,
+- Tree algorithms.
 - Clearer visualizations with more detailed explanations of each step.
-- User authentication
+- User authentication.
+- Custom input for algorithms.
+- Pseudocode display and tracing as the visualization plays.
+- AI integration.
 
 
 ## Rough notes for Reference
