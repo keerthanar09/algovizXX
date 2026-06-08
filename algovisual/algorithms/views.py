@@ -158,7 +158,7 @@ def bubble_sort(request):
     steps.append({"array": arr[:], "sorted": True})
     return Response({"steps": steps})
 
-# Merge sort API
+# Merge sort
 
 @api_view(['POST'])
 def merge_sort(request):
@@ -317,7 +317,8 @@ def insertion_sort(request):
 
 # Cycle sort
 
-#Sorting Algorithms
+# Graphs and Pathfinding algorithms
+
 # { nodes: [...], edges: [...], visited: [...], current: id, queue/stack: [...], path: [...], distances: {...} }
 
 @api_view(['POST'])

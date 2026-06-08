@@ -18,7 +18,7 @@ function Home() {
           Algorithm Visualizer
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: 480, margin: '0 auto' }}>
-          Trace an algorithm step by step.
+          Trace any algorithm step by step.
         </p>
       </div>
       <Carousal2 />

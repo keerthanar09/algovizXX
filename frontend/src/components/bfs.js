@@ -1,3 +1,4 @@
+// Old BFS Code - Legacy - Not currently used
 import React, { useEffect, useRef } from "react";
 import "./UI/styles/bfs.css";
 

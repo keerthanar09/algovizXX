@@ -32,7 +32,7 @@ function Carousal2() {
     <section style={{ padding: '1rem 1rem 3rem' }}>
       <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '1.75rem', fontSize: '0.95rem' }}>
         Select the category of algorithms you want to explore!<br/>
-        (There's more to come ;))
+        (There's more to come ;D)
       </p>
       <div className="ava-cards">
         {categories.map(cat => (

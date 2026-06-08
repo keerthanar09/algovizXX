@@ -1,3 +1,5 @@
+// Old DFS code - Not currently used
+
 import React, { useEffect, useRef } from "react";
 import "./UI/styles/bfs.css";
 
